@@ -44,7 +44,7 @@
 enum ctltype {
 	CTL_NONE = -1,
 	CTL_ERASEONE = 0, CTL_WIPE, CTL_UP, CTL_DOWN, CTL_RETURN,
-	CTL_TAB, CTL_ABORT, CTL_ALL
+	CTL_TAB, CTL_ABORT, CTL_ALL, CTL_SUPER, CTL_SUBTRACT
 };
 
 struct menu_ctx {
@@ -221,6 +221,7 @@ menu_handle_key(XEvent *e, struct menu_ctx *mc, struct menu_q *menuq,
     struct menu_q *resultq)
 {
 	struct menu	*mi;
+	struct client_ctx *cc;
 	enum ctltype	 ctl;
 	char		 chr[32];
 	size_t		 len;
@@ -305,6 +306,36 @@ menu_handle_key(XEvent *e, struct menu_ctx *mc, struct menu_q *menuq,
 		mc->list = !mc->list;
 		break;
 	case CTL_ABORT:
+		mi = xmalloc(sizeof(*mi));
+		mi->text[0] = '\0';
+		mi->dummy = 1;
+		mi->abort = 1;
+		return mi;
+	case CTL_SUPER:
+		if ((mi = TAILQ_FIRST(resultq)) != NULL) {
+			cc = (struct client_ctx *)mi->ctx;
+			client_show(cc);
+			while ((mi = TAILQ_NEXT(mi, resultentry)) != NULL) {
+				cc = (struct client_ctx *)mi->ctx;
+				client_show(cc);
+			}
+		}
+
+		mi = xmalloc(sizeof(*mi));
+		mi->text[0] = '\0';
+		mi->dummy = 1;
+		mi->abort = 1;
+		return mi;
+	case CTL_SUBTRACT:
+		if ((mi = TAILQ_FIRST(resultq)) != NULL) {
+			cc = (struct client_ctx *)mi->ctx;
+			client_hide(cc);
+			while ((mi = TAILQ_NEXT(mi, resultentry)) != NULL) {
+				cc = (struct client_ctx *)mi->ctx;
+				client_hide(cc);
+			}
+		}
+
 		mi = xmalloc(sizeof(*mi));
 		mi->text[0] = '\0';
 		mi->dummy = 1;
@@ -532,6 +563,12 @@ menu_keycode(XKeyEvent *ev, enum ctltype *ctl, char *chr)
 	case XK_Escape:
 		*ctl = CTL_ABORT;
 		break;
+        case XK_Super_L:
+                *ctl = CTL_SUPER;
+                break;
+        case XK_Delete:
+                *ctl = CTL_SUBTRACT;
+                break;
 	}
 
 	if (*ctl == CTL_NONE && (ev->state & ControlMask)) {
