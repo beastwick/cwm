@@ -354,6 +354,12 @@ kbfunc_client_hide(void *ctx, struct cargs *cargs)
 }
 
 void
+kbfunc_client_hide_unfocused(void *ctx, struct cargs *cargs)
+{
+	client_hide_unfocused();
+}
+
+void
 kbfunc_client_toggle_freeze(void *ctx, struct cargs *cargs)
 {
 	client_toggle_freeze(ctx);

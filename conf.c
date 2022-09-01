@@ -82,6 +82,7 @@ static const struct {
 	{ FUNC_CC(window-lower, client_lower, 0) },
 	{ FUNC_CC(window-raise, client_raise, 0) },
 	{ FUNC_CC(window-hide, client_hide, 0) },
+	{ FUNC_CC(window-hide-unfocused, client_hide_unfocused, 0) },
 	{ FUNC_CC(window-close, client_close, 0) },
 	{ FUNC_CC(window-delete, client_close, 0) },
 	{ FUNC_CC(window-htile, client_htile, 0) },

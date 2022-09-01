@@ -555,6 +555,23 @@ client_hide(struct client_ctx *cc)
 }
 
 void
+client_hide_unfocused()
+{
+	struct screen_ctx	*sc;
+	struct client_ctx	*cc;
+
+	TAILQ_FOREACH(sc, &Screenq, entry) {
+		TAILQ_FOREACH(cc, &sc->clientq, entry) {
+			if (!(cc->flags & CLIENT_ACTIVE)) {
+				XUnmapWindow(X_Dpy, cc->win);
+				cc->flags |= CLIENT_HIDDEN;
+				xu_set_wm_state(cc->win, IconicState);
+			}	
+		}
+	}
+}
+
+void
 client_show(struct client_ctx *cc)
 {
 	XMapRaised(X_Dpy, cc->win);
