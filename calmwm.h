@@ -429,6 +429,7 @@ void			 client_draw_border(struct client_ctx *);
 struct client_ctx	*client_find(Window);
 void			 client_get_sizehints(struct client_ctx *);
 void			 client_hide(struct client_ctx *);
+void			 client_hide_unfocused();
 void 			 client_htile(struct client_ctx *);
 int			 client_inbound(struct client_ctx *, int, int);
 struct client_ctx	*client_init(Window, struct screen_ctx *);
@@ -521,6 +522,7 @@ void			 kbfunc_client_close(void *, struct cargs *);
 void			 kbfunc_client_lower(void *, struct cargs *);
 void			 kbfunc_client_raise(void *, struct cargs *);
 void			 kbfunc_client_hide(void *, struct cargs *);
+void			 kbfunc_client_hide_unfocused(void *, struct cargs *);
 void			 kbfunc_client_toggle_freeze(void *, struct cargs *);
 void			 kbfunc_client_toggle_sticky(void *, struct cargs *);
 void			 kbfunc_client_toggle_fullscreen(void *,
