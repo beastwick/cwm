@@ -1,3 +1,11 @@
+Running list of modifications from this repo:
+
+- Quickly hide all unfocused windows by binding window-hide-unfocused to a key. 
+- Show or hide all windows that match a search string. 
+    In the search menu, super key will show, subtract will hide.
+
+The original README now follows...
+
 This is a port of OpenBSD's excellent cwm[0] to Linux and other Unices.
 
     cwm is a window manager for X11 which contains many features that
