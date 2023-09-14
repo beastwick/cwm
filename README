@@ -3,6 +3,7 @@ Running list of modifications from this repo:
 - Quickly hide all unfocused windows by binding window-hide-unfocused to a key. 
 - Show or hide all windows that match a search string. 
     In the search menu, super key will show, subtract will hide.
+- Expanded groups to include F1 through F12 keys.
 
 The original README now follows...
 
